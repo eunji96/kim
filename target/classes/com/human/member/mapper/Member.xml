@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.human.member.iMember">
+<select id="listName" resultType="String">
+	select name from t_member where id=#{param1} and pwd=#{param2}
+</select>
+<select id="checkId" resultType="int">
+	select count(*) cnt from t_member where id=#{param1} and pwd=#{param2}
+</select>
+<insert id="insert">
+	insert into t_member values(#{param1},#{param2},#{param3},#{param4},to_char(sysdate,'YYYY-MM-DD'))
+</insert>
+
+<select id="listBoard" resultType="com.human.member.mDTO">
+	select * from board order by seqbbs desc
+</select>
+<update id="upVw">
+	update board set vw=#{param1} where seqbbs=#{param2}
+</update>
+<select id="oneBoard" resultType="com.human.member.mDTO">
+	select * from board where seqbbs=#{param1}
+</select>
+<insert id="inBoard">
+	insert into board values(kp.nextval,#{param1},#{param2},#{param3},to_char(sysdate,'YYYY-MM-DD hh:mi:ss'),0)
+</insert>
+<delete id="dePost">
+	delete from board where seqbbs=#{param1}
+</delete>
+<update id="upPost">
+	update board set title=#{param1}, content=#{param2}, created=to_char(sysdate,'YYYY-MM-DD hh:mi:ss') 
+	where seqbbs=#{param3} and writer=#{param4}
+</update>
+</mapper>
